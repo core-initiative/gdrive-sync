@@ -1,37 +1,42 @@
 package main
 
 import (
-    "flag"
-    "fmt"
-    "log"
-    "github.com/robfig/cron/v3"
-)
+	"context"
+	"flag"
 
+    "drive-sync/log"
+	"github.com/robfig/cron/v3"
+)
+var Version = "0.1"
 func main() {
+
     // Define command-line flags
-    configPath := flag.String("config", "config.yaml", "Path to the configuration file")
+    configPath := flag.String("config", "./conf/config.yaml", "Path to the configuration file")
     immediate := flag.Bool("immediate", false, "Run the backup immediately without waiting for the schedule")
     flag.Parse()
 
-    config, err := LoadConfig(*configPath)
+    // create root logger tagged with server version
+	logger := log.New().With(context.Background(), "version", Version)
+
+    config, err := LoadConfig(*configPath, logger)
     if err != nil {
-        log.Fatalf("Error loading configuration: %v", err)
+        logger.Errorf("Error loading configuration: %v", err)
     }
 
     if *immediate {
-        fmt.Printf("Running backup immediately for folder: %s\n", config.Folder)
+        logger.Infof("Running backup immediately for folder: %s\n", config.Folder)
         SyncFolder(config.Folder, config.TargetFolderID)
         return
     }
 
     c := cron.New()
     _, err = c.AddFunc(config.Schedule, func() {
-        fmt.Printf("Syncing folder: %s\n", config.Folder)
+        logger.Infof("Syncing folder: %s\n", config.Folder)
         SyncFolder(config.Folder, config.TargetFolderID)
     })
 
     if err != nil {
-        log.Fatalf("Error scheduling sync: %v", err)
+        logger.Errorf("Error scheduling sync: %v", err)
     }
 
     c.Start()

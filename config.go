@@ -3,16 +3,18 @@ package main
 import (
     "os"
     "io"
+    "github.com/qiangxue/go-env"
     "gopkg.in/yaml.v2"
+    "drive-sync/log"
 )
 
 type Config struct {
-    Folder        string `yaml:"folder"`
-    Schedule      string `yaml:"schedule"`
-    TargetFolderID string `yaml:"targetFolderID"`
+    Folder        string `yaml:"folder" env:"FOLDER"`
+    Schedule      string `yaml:"schedule" env:"SCHEDULE"`
+    TargetFolderID string `yaml:"targetFolderID" env:"TARGET_FOLDER_ID"`
 }
 
-func LoadConfig(filename string) (*Config, error) {
+func LoadConfig(filename string, logger log.Logger) (*Config, error) {
     file, err := os.Open(filename)
     if err != nil {
         return nil, err
@@ -29,6 +31,11 @@ func LoadConfig(filename string) (*Config, error) {
     if err != nil {
         return nil, err
     }
+
+    // load from environment variables prefixed with "APP_"
+	if err = env.New("APP_", logger.Infof).Load(&config); err != nil {
+		return nil, err
+	}
 
     return &config, nil
 }

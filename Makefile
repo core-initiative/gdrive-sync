@@ -13,11 +13,11 @@ build:
 
 # Run the application with the scheduled configuration
 run: build
-	./$(BINARY_NAME) -config $(CONFIG_FILE)
+	./build/$(BINARY_NAME) -config ./conf/$(CONFIG_FILE)
 
 # Run the application immediately for testing
 run-immediate: build
-	./$(BINARY_NAME) -config $(CONFIG_FILE) -immediate
+	./build/$(BINARY_NAME) -config ./conf/$(CONFIG_FILE) -immediate
 
 # Test the application
 test:
@@ -26,4 +26,4 @@ test:
 # Clean the build
 clean:
 	go clean
-	rm -f $(BINARY_NAME)
+	rm -f ./build/$(BINARY_NAME)

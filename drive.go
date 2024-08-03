@@ -19,7 +19,7 @@ import (
 )
 
 func getClient(config *oauth2.Config) *http.Client {
-    tokFile := "token.json"
+    tokFile := "conf/token.json"
     tok, err := tokenFromFile(tokFile)
     if err != nil {
         tok = getTokenFromWeb(config)
@@ -66,7 +66,7 @@ func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 }
 
 func SyncFolder(folderPath string, targetFolderID string) {
-    b, err := os.ReadFile("credentials.json")
+    b, err := os.ReadFile("conf/credentials.json")
     if err != nil {
         log.Fatalf("Unable to read client secret file: %v", err)
     }

@@ -7,4 +7,4 @@ echo "[`date`] Running entrypoint script in the '${APP_ENV}' environment..."
 CONFIG_FILE=./config.yaml
 
 echo "[`date`] Starting server..."
-./server -config ${CONFIG_FILE}
+./drive-sync -config ${CONFIG_FILE}

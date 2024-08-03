@@ -9,7 +9,7 @@ all: build
 
 # Build the binary
 build:
-	go build -o $(BINARY_NAME)
+	go build -o build/$(BINARY_NAME)
 
 # Run the application with the scheduled configuration
 run: build

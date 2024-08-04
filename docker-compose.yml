@@ -8,4 +8,6 @@ services:
       - APP_TARGET_FOLDER_ID="1MvzZSLD0b_ASdNRGVc-vb2-G_9yQX_Tu"
     logging:
       driver: json-file
+    volumes:
+      - /etc/localtime:/etc/localtime
   

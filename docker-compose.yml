@@ -1,0 +1,11 @@
+services:
+  sync:
+    image: purwaren/gdrive-sync:v0.1
+    restart: always
+    environment:
+      - APP_FOLDER="/Users/purwaren/ihram"
+      - APP_SCHEDULE="0 0 * * *"
+      - APP_TARGET_FOLDER_ID="1MvzZSLD0b_ASdNRGVc-vb2-G_9yQX_Tu"
+    logging:
+      driver: json-file
+  

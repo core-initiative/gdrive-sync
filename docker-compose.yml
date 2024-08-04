@@ -10,4 +10,5 @@ services:
       driver: json-file
     volumes:
       - /etc/localtime:/etc/localtime
+      - ./conf:/app/conf
   

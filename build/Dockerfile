@@ -25,7 +25,7 @@ RUN mkdir -p /var/log/app
 WORKDIR /app/
 COPY --from=build /app/build .
 COPY --from=build /app/build/entrypoint.sh .
-COPY --from=build /app/config.yaml .
+COPY --from=build /app/conf/config.yaml .
 ENV TZ=Asia/Jakarta
 RUN chmod +x ./entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
